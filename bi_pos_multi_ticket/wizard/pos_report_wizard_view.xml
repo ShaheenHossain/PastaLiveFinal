@@ -39,17 +39,17 @@
             <field name="margin_top">40</field>
             <field name="margin_bottom">15</field>
             <field name="margin_left">5</field>
-            <field name="margin_right">8</field>
+            <field name="margin_right">16</field>
             <field name="header_line" eval="False" />
             <field name="orientation">Portrait</field>
             <field name="header_spacing">36</field>
             <field name="dpi">110</field>
         </record>
 
-        <report 
-            id="pos_report" 
-            string="Sales Details" 
-            model="closed.session.report" 
+        <report
+            id="pos_report"
+            string="Sales Details"
+            model="closed.session.report"
             report_type="qweb-pdf"
             name="bi_pos_multi_ticket.report_close_session"
             file="bi_pos_multi_ticket.report_close_session"

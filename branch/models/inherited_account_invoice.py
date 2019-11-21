@@ -10,7 +10,6 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def _default_branch_id(self):
-        print ("sssssssssssssssssssssssssssssssssssssssssssss",self._context.get('branch_id'))
         if not self._context.get('branch_id'):
            branch_id = self.env['res.users'].browse(self._uid).branch_id.id
         else:
@@ -113,7 +112,7 @@ class AccountInvoice(models.Model):
             }
             inv.write(vals)
             for move_line in move.line_ids:
-                move_line.branch_id  =  inv.branch_id.id    
+                move_line.branch_id  =  inv.branch_id.id
         return True
 
     # @api.model
