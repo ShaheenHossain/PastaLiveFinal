@@ -88,27 +88,27 @@
                                         <t t-esc="report_data_value.get('uom_id')" />
                                     </td>
                                     <td class="text-right">
-                                        <t t-esc="report_data_value.get('initial_qty')" />
+                                        <t t-esc="'%.3f' % (report_data_value.get('initial_qty'))" />
                                         <t t-set="initial_qty_total" t-value="initial_qty_total + report_data_value.get('initial_qty')"/>
                                     </td>
                                     <td class="text-right">
-                                        <t t-esc="report_data_value.get('delivered_qty')" />
+                                        <t t-esc="'%.3f' % (report_data_value.get('delivered_qty'))" />
                                         <t t-set="delivered_qty_total" t-value="delivered_qty_total + report_data_value.get('delivered_qty')"/>
                                     </td>
                                     <td class="text-right">
-                                        <t t-esc="report_data_value.get('received_qty')" />
+                                        <t t-esc="'%.3f' % (report_data_value.get('received_qty'))" />
                                         <t t-set="received_qty_total" t-value="received_qty_total + report_data_value.get('received_qty')"/>
                                     </td>
                                     <td class="text-right">
-                                        <t t-esc="report_data_value.get('internal_transfer')" />
+                                        <t t-esc="'%.3f' % (report_data_value.get('internal_transfer'))" />
                                         <t t-set="internal_transfer_total" t-value="internal_transfer_total + report_data_value.get('internal_transfer')"/>
                                     </td>
                                     <td class="text-right">
-                                        <t t-esc="report_data_value.get('adjustment')" />
+                                        <t t-esc="'%.3f' % (report_data_value.get('adjustment'))" />
                                         <t t-set="adjustment_total" t-value="adjustment_total + report_data_value.get('adjustment')"/>
                                     </td>
                                     <td class="text-right">
-                                        <t t-esc="report_data_value.get('balance_qty')" />
+                                        <t t-esc="'%.3f' % (report_data_value.get('balance_qty'))" />
                                         <t t-set="balance_qty_total" t-value="balance_qty_total + report_data_value.get('balance_qty')"/>
                                     </td>
                                 </tr>
@@ -117,22 +117,22 @@
                                         <strong>Total </strong>
                                     </td>
                                     <td class="text-right">
-                                        <strong><t t-esc="initial_qty_total" /></strong>
+                                        <strong><t t-esc="'%.3f' % (initial_qty_total)" /></strong>
                                     </td>
                                     <td class="text-right">
-                                        <strong><t t-esc="delivered_qty_total" /></strong>
+                                        <strong><t t-esc="'%.3f' % (delivered_qty_total)" /></strong>
                                     </td>
                                     <td class="text-right">
-                                        <strong><t t-esc="received_qty_total" /></strong>
+                                        <strong><t t-esc="'%.3f' % (received_qty_total)" /></strong>
                                     </td>
                                     <td class="text-right">
-                                        <strong><t t-esc="internal_transfer_total" /></strong>
+                                        <strong><t t-esc="'%.3f' % (internal_transfer_total)" /></strong>
                                     </td>
                                     <td class="text-right">
-                                        <strong><t t-esc="adjustment_total" /></strong>
+                                        <strong><t t-esc="'%.3f' % (adjustment_total)" /></strong>
                                     </td>
                                     <td class="text-right">
-                                        <strong><t t-esc="balance_qty_total" /></strong>
+                                        <strong><t t-esc="'%.3f' % (balance_qty_total)" /></strong>
                                     </td>
                                 </tr>
                             </tbody>
