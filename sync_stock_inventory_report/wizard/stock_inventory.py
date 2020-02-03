@@ -327,12 +327,12 @@ class StockInventoryReport(models.TransientModel):
             ws.write(row, 0, product_list[key]['product'], sub_header_content_style1)
             ws.write(row, 1, product_list[key]['product_code'] or '', sub_header_content_style1)
             ws.write(row, 2, product_list[key]['uom_id'], sub_header_content_style1)
-            ws.write(row, 3, str(round(product_list[key]['initial_qty'], 3)), sub_header_content_style)
-            ws.write(row, 4, str(round(product_list[key]['delivered_qty'], 3)), sub_header_content_style)
-            ws.write(row, 5, str(round(product_list[key]['received_qty'], 3)), sub_header_content_style)
-            ws.write(row, 6, str(round(product_list[key]['internal_transfer'], 3)), sub_header_content_style)
-            ws.write(row, 7, str(round(product_list[key]['adjustment'], 3)), sub_header_content_style)
-            ws.write(row, 8, str(round(product_list[key]['balance_qty'], 3)), sub_header_content_style)
+            ws.write(row, 3, str(round(product_list[key]['initial_qty'], 2)), sub_header_content_style)
+            ws.write(row, 4, str(round(product_list[key]['delivered_qty'], 2)), sub_header_content_style)
+            ws.write(row, 5, str(round(product_list[key]['received_qty'], 2)), sub_header_content_style)
+            ws.write(row, 6, str(round(product_list[key]['internal_transfer'], 2)), sub_header_content_style)
+            ws.write(row, 7, str(round(product_list[key]['adjustment'], 2)), sub_header_content_style)
+            ws.write(row, 8, str(round(product_list[key]['balance_qty'], 2)), sub_header_content_style)
             total_dict.update({
                 'initial_qty': total_dict.get('initial_qty') + product_list[key]['initial_qty'],
                 'delivered_qty': total_dict.get('delivered_qty') + product_list[key]['delivered_qty'],
@@ -343,12 +343,12 @@ class StockInventoryReport(models.TransientModel):
             })
             row += 1
         ws.write(row, 2, 'Total', sub_header_style)
-        ws.write(row, 3, str(round(total_dict.get('initial_qty'), 3)), sub_header_style)
-        ws.write(row, 4, str(round(total_dict.get('delivered_qty'), 3)), sub_header_style)
-        ws.write(row, 5, str(round(total_dict.get('received_qty'), 3)), sub_header_style)
-        ws.write(row, 6, str(round(total_dict.get('internal_transfer'), 3)), sub_header_style)
-        ws.write(row, 7, str(round(total_dict.get('adjustment'), 3)), sub_header_style)
-        ws.write(row, 8, str(round(total_dict.get('balance_qty'), 3)), sub_header_style)
+        ws.write(row, 3, str(round(total_dict.get('initial_qty'), 2)), sub_header_style)
+        ws.write(row, 4, str(round(total_dict.get('delivered_qty'), 2)), sub_header_style)
+        ws.write(row, 5, str(round(total_dict.get('received_qty'), 2)), sub_header_style)
+        ws.write(row, 6, str(round(total_dict.get('internal_transfer'), 2)), sub_header_style)
+        ws.write(row, 7, str(round(total_dict.get('adjustment'), 2)), sub_header_style)
+        ws.write(row, 8, str(round(total_dict.get('balance_qty'), 2)), sub_header_style)
         row += 1
 
         wb.save(fp)
