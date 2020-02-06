@@ -240,7 +240,7 @@ class StockInventoryReport(models.TransientModel):
                     'product_id': stock_move_line.product_id.id,
                     'product_categ_id': stock_move_line.product_id.categ_id.id,
                     'product_code': stock_move_line.product_id.default_code,
-                    'initial_qty': move_uom_id._compute_quantity(stock_move_line.qty_done, product_uom_id),
+                    'initial_qty': -(move_uom_id._compute_quantity(stock_move_line.qty_done, product_uom_id)),
                     'received_qty': 0.0,
                     'delivered_qty': 0.0,
                     'internal_transfer': 0.0,
