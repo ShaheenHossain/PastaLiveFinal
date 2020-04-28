@@ -30,7 +30,7 @@ class report_account_general_ledger(models.AbstractModel):
         tables, where_clause, where_params = self.env['account.move.line']._query_get()
         line_clause = line_id and ' AND \"account_move_line\".account_id = ' + str(line_id) or ''
         if options.get('branch'):
-            where_clause += 'and ("account_move_line"."branch_id" in ('
+            where_clause += 'AND "account_move_line".branch_id IS NOT NULL AND ("account_move_line"."branch_id" in ('
             for a in range(len(options.get('branch'))):
                 where_clause += '%s,'
             where_clause = where_clause[:-1]
@@ -43,6 +43,34 @@ class report_account_general_ledger(models.AbstractModel):
         self.env.cr.execute(with_sql + query, with_params + where_params)
         results = self.env.cr.fetchall()
         return results
+
+    def _do_query_unaffected_earnings(self, options, line_id, company=None):
+        ''' Compute the sum of ending balances for all accounts that are of a type that does not bring forward the balance in new fiscal years.
+            This is needed to balance the trial balance and the general ledger reports (to have total credit = total debit)
+        '''
+
+        select = '''
+        SELECT COALESCE(SUM("account_move_line".balance), 0),
+               COALESCE(SUM("account_move_line".amount_currency), 0),
+               COALESCE(SUM("account_move_line".debit), 0),
+               COALESCE(SUM("account_move_line".credit), 0)'''
+        if options.get('cash_basis'):
+            select = select.replace('debit', 'debit_cash_basis').replace('credit', 'credit_cash_basis').replace('balance', 'balance_cash_basis')
+        select += " FROM %s WHERE %s"
+        user_types = self.env['account.account.type'].search([('type', 'in', ('receivable', 'payable'))])
+        with_sql, with_params = self._get_with_statement(user_types)
+        aml_domain = [('user_type_id.include_initial_balance', '=', False)]
+        if company:
+            aml_domain += [('company_id', '=', company.id)]
+        if options.get('branch'):
+            aml_domain += [('branch_id', 'in', [int(branch) for branch in options.get('branch')])]
+        tables, where_clause, where_params = self.env['account.move.line']._query_get(domain=aml_domain)
+        query = select % (tables, where_clause)
+        self.env.cr.execute(with_sql + query, with_params + where_params)
+        res = self.env.cr.fetchone()
+        date = self._context.get('date_to') or fields.Date.today()
+        currency_convert = lambda x: company and company.currency_id._convert(x, self.env.user.company_id.currency_id, self.env.user.company_id, date) or x
+        return {'balance': currency_convert(res[0]), 'amount_currency': res[1], 'debit': currency_convert(res[2]), 'credit': currency_convert(res[3])}
 
     def _group_by_account_id(self, options, line_id):
         accounts = {}
