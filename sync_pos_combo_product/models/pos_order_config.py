@@ -70,6 +70,16 @@ class PosOrder(models.Model):
         if combo_line:
             product_line += combo_line
         result.update({'lines': [process_line(l) for l in product_line] if product_line else False})
+        for line in result['lines']:
+            if len(line) == 3:
+                if 'is_combo_line' in line[2]:
+                    del line[2]['is_combo_line']
+                if 'note' in line[2]:
+                    del line[2]['note']
+                if 'req_product_ids' in line[2]:
+                    del line[2]['req_product_ids']
+                if 'unreq_product_ids' in line[2]:
+                    del line[2]['unreq_product_ids']
         return result
 
     def _action_create_invoice_line(self, line=False, invoice_id=False):
