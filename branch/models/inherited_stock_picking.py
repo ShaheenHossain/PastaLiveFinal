@@ -1,6 +1,15 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
+from psycopg2 import OperationalError, Error
+
+from odoo.exceptions import UserError, ValidationError
+from odoo.osv import expression
+from odoo.tools.float_utils import float_compare, float_is_zero
+
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class StockPicking(models.Model):
